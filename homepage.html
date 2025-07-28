@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Codenames Party - Home</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <script>
+    function generateRoomCode() {
+      const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      let code = '';
+      for (let i = 0; i < 4; i++) {
+        code += letters[Math.floor(Math.random() * letters.length)];
+      }
+      window.location.href = `party.html?room=${code}`;
+    }
+
+    function joinRoom() {
+      const input = document.getElementById('room-code').value.trim().toUpperCase();
+      if (input.length === 4) {
+        window.location.href = `party.html?room=${input}`;
+      } else {
+        alert('Please enter a valid 4-letter code.');
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-900 text-white font-sans flex flex-col items-center justify-center h-screen">
+  <div class="text-center">
+    <h1 class="text-4xl font-bold mb-6">🎉 Codenames Party</h1>
+    <button onclick="generateRoomCode()" class="bg-green-600 px-6 py-3 rounded text-lg mb-4">Start a Party</button>
+    <div class="mt-4">
+      <input id="room-code" type="text" maxlength="4" class="text-center uppercase p-2 rounded bg-gray-800 w-32" placeholder="Room Code" />
+      <button onclick="joinRoom()" class="ml-2 bg-blue-500 px-4 py-2 rounded">Join</button>
+    </div>
+  </div>
+</body>
+</html>
