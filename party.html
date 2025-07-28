@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="party-title">Codenames Party</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <script defer src="js/game.js"></script>
+  <script defer src="js/chat.js"></script>
+  <script defer src="js/music.js"></script>
+  <script defer src="js/users.js"></script>
+  <script defer src="js/party.js"></script>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+  <div class="p-4 flex justify-between items-center border-b border-gray-700">
+    <div class="flex items-center gap-4">
+      <input id="party-name-input" type="text" class="p-1 bg-gray-800 rounded" placeholder="Name this party" oninput="updatePartyName(this.value)" />
+      <button onclick="saveCurrentParty()" class="bg-purple-600 px-2 py-1 rounded text-sm">💾 Save Party</button>
+      <select id="saved-parties" class="bg-gray-800 text-sm p-1 rounded" onchange="loadSavedParty(this.value)">
+        <option value="">🔽 Load Saved</option>
+      </select>
+    </div>
+    <div class="flex items-center gap-4">
+      <span id="user-count" class="text-sm bg-gray-800 px-2 py-1 rounded">👥 0 players online</span>
+      <button onclick="copyShareLink()" class="bg-blue-600 text-white px-3 py-1 rounded text-sm">🔗 Share Party</button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-3 gap-4 p-4">
+    <!-- Codenames Embed -->
+    <div class="col-span-2">
+      <h2 class="text-xl font-bold mb-2">Codenames Board</h2>
+      <iframe
+        id="codenames-embed"
+        src="https://codenames.game/"
+        class="w-full h-[500px] border border-gray-700 rounded"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <!-- Chat + Reactions -->
+    <div>
+      <h2 class="text-xl font-bold mb-2">Chat</h2>
+      <div id="chat-box" class="h-64 overflow-y-auto border border-gray-700 p-2 mb-2 bg-gray-800"></div>
+      <form id="chat-form" class="flex gap-2">
+        <input id="chat-input" type="text" class="flex-1 p-1 rounded bg-gray-700" placeholder="Say something..." />
+        <button type="submit" class="bg-blue-500 px-2 rounded">Send</button>
+      </form>
+      <div class="mt-2">
+        <button onclick="sendReaction('🔥')">🔥</button>
+        <button onclick="sendReaction('😂')">😂</button>
+        <button onclick="sendReaction('❤️')">❤️</button>
+      </div>
+    </div>
+
+    <!-- Music Player -->
+    <div class="col-span-3 mt-4">
+      <h2 class="text-xl font-bold mb-2">Music Player</h2>
+      <div class="flex gap-2 mb-2">
+        <select id="music-source" class="p-1 bg-gray-800 rounded">
+          <option value="youtube">YouTube</option>
+          <option value="soundcloud">SoundCloud</option>
+        </select>
+        <input id="music-url" type="text" class="flex-1 p-1 rounded bg-gray-700" placeholder="Paste playlist or track URL" />
+        <button onclick="loadMusic()" class="bg-green-500 px-2 rounded">Load</button>
+      </div>
+      <div id="music-player" class="bg-black p-2 rounded"></div>
+    </div>
+  </div>
+
+  <script>
+    function copyShareLink() {
+      navigator.clipboard.writeText(window.location.href)
+        .then(() => alert('Party link copied to clipboard!'))
+        .catch(err => alert('Failed to copy link.'));
+    }
+  </script>
+</body>
+</html>
